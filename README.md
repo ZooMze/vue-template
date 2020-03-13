@@ -20,7 +20,7 @@ git clone https://github.com/PanJiaChen/vue-admin-template.git
 cd vue-admin-template
 
 # install dependency
-npm install
+npm install --registry=https://registry.npm.taobao.org
 
 # develop
 npm run dev
