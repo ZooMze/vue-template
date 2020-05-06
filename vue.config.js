@@ -29,6 +29,16 @@ module.exports = {
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
+  // devServer: {
+  //   proxy: {
+  //     '/dev-api': {
+  //       target: 'http://47.105.40.119:8080/app/',
+  //       ws: false,
+  //       changeOrigin: true,
+  //       pathRewrite: { '^/dev-api': '' }
+  //     }
+  //   }
+  // },
   devServer: {
     port: port,
     open: true,
@@ -38,15 +48,24 @@ module.exports = {
     },
     before: require('./mock/mock-server.js')
   },
-  configureWebpack: {
-    // provide the app's title in webpack's name field, so that
-    // it can be accessed in index.html to inject the correct title.
-    name: name,
-    resolve: {
-      alias: {
-        '@': resolve('src')
-      }
+  // configureWebpack: {
+  //   // provide the app's title in webpack's name field, so that
+  //   // it can be accessed in index.html to inject the correct title.
+  //   name: name,
+  //   resolve: {
+  //     alias: {
+  //       '@': resolve('src')
+  //     }
+  //   },
+  //   entry: {}
+  // },
+  /** setting polyfill */
+  configureWebpack: config => {
+    config.name = name
+    config.resolve.alias = {
+      '@': resolve('src')
     }
+    config.entry.app = ['babel-polyfill', './src/main.js']
   },
   chainWebpack(config) {
     config.plugins.delete('preload') // TODO: need test

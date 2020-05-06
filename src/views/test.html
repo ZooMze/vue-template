@@ -1,0 +1,407 @@
+<template>
+  <div class="dashboard-container">
+    <!-- <div class="dashboard-text">name: {{ name }}</div>
+    <div>ZooMze</div>
+    <div class="dashboard-text">roles: <span v-for="role in roles" :key="role">{{ role }}</span></div> -->
+    <div id="container" style="width: 100%; height: calc(100vh - 120px);border: 1px solid #ececec;"></div>
+  </div>
+</template>
+
+<script>
+import { mapGetters } from 'vuex'
+import G6 from '@antv/g6'
+
+// import { Menu } from '@antv/x6-components/es/menu'
+// import '@antv/x6-components/es/menu/style'
+
+export default {
+  name: 'Dashboard',
+  computed: {
+    ...mapGetters([
+      'name',
+      'roles'
+    ])
+  },
+  mounted() {
+    let data = {
+      nodes: [
+        {
+          id: '1',
+          label: '1 办公室文秘',
+          type: 'ellipse',
+          level: 0,
+          x: 100,
+          y: 100
+        },
+        {
+          id: '2',
+          label: '2 办公室领导审批',
+          level: 1,
+          x: 400,
+          y: 100
+        },
+        {
+          id: '3',
+          label: '3 总经理审批',
+          level: 2,
+          x: 700,
+          y: 100
+        },
+        {
+          id: '4',
+          label: '4 部门领导(德吉)',
+          level: 3,
+          x: 1000,
+          y: 100
+        },
+        {
+          id: '5',
+          label: '5 部门领导(楚光)',
+          level: 3,
+          x: 1000,
+          y: 300
+        },
+        {
+          id: '6',
+          label: '6 部门和子公司领导',
+          level: 3,
+          x: 1000,
+          y: 500
+        },
+        {
+          id: '7',
+          label: '7 财务金融审计办理人',
+          level: 3,
+          x: 1000,
+          y: 700
+        },
+        {
+          id: '8',
+          label: '8 党建/纪检工作部办理人',
+          level: 4,
+          x: 1300,
+          y: 100
+        },
+        {
+          id: '9',
+          label: '9 办公室管理人',
+          level: 4,
+          x: 1300,
+          y: 300
+        },
+        {
+          id: '10',
+          label: '10 资源保障部办理人',
+          level: 4,
+          x: 1300,
+          y: 500
+        },
+        {
+          id: '11',
+          label: '11 人力资源办理人',
+          level: 4,
+          x: 1300,
+          y: 700
+        },
+        {
+          id: '12',
+          label: '12 战略策划部办理人',
+          level: 4,
+          x: 1300,
+          y: 900
+        },
+        {
+          id: '13',
+          label: '13 信息技术部办理人',
+          level: 4,
+          x: 1300,
+          y: 1100
+        },
+        {
+          id: '14',
+          label: '14 信息安全公司办理人',
+          level: 4,
+          x: 1300,
+          y: 1300
+        },
+        {
+          id: '15',
+          label: '15 结束',
+          level: 5,
+          type: 'ellipse',
+          x: 1600,
+          y: 100
+        }
+      ],
+      edges: [
+        // 配置内置折线的弯折弧度、端点最小距离
+        {
+          source: '1',
+          target: '2'
+        },
+        {
+          source: '2',
+          target: '3'
+        },
+        {
+          source: '4',
+          target: '2'
+        },
+        {
+          source: '2',
+          target: '1'
+        },
+        {
+          source: '3',
+          target: '4'
+        },
+        {
+          source: '3',
+          target: '5'
+        },
+        {
+          source: '3',
+          target: '6'
+        },
+        {
+          source: '3',
+          target: '7'
+        },
+        {
+          source: '3',
+          target: '8'
+        },
+        {
+          source: '4',
+          target: '9'
+        },
+        {
+          source: '4',
+          target: '10'
+        },
+        {
+          source: '4',
+          target: '11'
+        },
+        {
+          source: '4',
+          target: '12'
+        },
+        {
+          source: '4',
+          target: '13'
+        },
+        {
+          source: '4',
+          target: '13'
+        },
+        {
+          source: '4',
+          target: '15'
+        },
+        {
+          source: '7',
+          target: '15'
+        },
+        {
+          source: '8',
+          target: '15'
+        },
+        {
+          source: '9',
+          target: '15'
+        },
+        {
+          source: '10',
+          target: '15'
+        },
+        {
+          source: '11',
+          target: '15'
+        },
+        {
+          source: '12',
+          target: '15'
+        },
+        {
+          source: '13',
+          target: '15'
+        },
+        {
+          source: '14',
+          target: '15'
+        },
+        {
+          source: '5',
+          target: '14'
+        },
+        {
+          source: '6',
+          target: '9'
+        },
+        {
+          source: '6',
+          target: '10'
+        },
+        {
+          source: '6',
+          target: '8'
+        },
+        {
+          source: '6',
+          target: '14'
+        }
+      ]
+    }
+
+    const width = document.getElementById('container').scrollWidth
+    const height = document.getElementById('container').scrollHeight || 500
+    const minimap = new G6.Minimap({
+      size: [150, 100]
+    })
+    const graph = new G6.Graph({
+      container: 'container',
+      width,
+      height,
+      fitView: true,
+      defaultNode: {
+        type: 'rect',
+        size: [200, 80],
+        anchorPoints: [[0, 0.5], [0.5, 0], [1, 0.5], [0.5, 1]],
+        style: {
+          opacity: 0.8,
+          lineWidth: 4,
+          fill: '#fff',
+          stroke: '#000'
+        },
+        labelCfg: {
+          style: {
+            fontSize: 18
+          }
+        }
+      },
+      nodeStateStyles: {
+        highlight: {
+          opacity: 1,
+          radius: [8],
+          stroke: '#f71c1c'
+        },
+        dark: {
+          opacity: 0.8,
+          lineWidth: 4,
+          fill: '#fff',
+          stroke: '#000'
+        },
+        previous: {
+          opacity: 1,
+          radius: [40, 8, 8, 40],
+          stroke: '#f71c1c'
+        },
+        next: {
+          opacity: 1,
+          radius: [8, 40, 40, 8],
+          stroke: '#f71c1c'
+        }
+      },
+      defaultEdge: {
+        type: 'polyline',
+        style: {
+          lineWidth: 2,
+          radius: 8,
+          offset: 30,
+          stroke: '#000',
+          opacity: 0.5,
+          endArrow: true
+        }
+      },
+      edgeStateStyles: {
+        highlight: {
+          lineWidth: 6,
+          opacity: 0.8,
+          stroke: '#f71c1c'
+        }
+      },
+      modes: {
+        default: ['drag-canvas', 'zoom-canvas']
+      },
+      plugins: [minimap]
+    })
+
+    data.edges.forEach((item, index) => {
+      // 计算正向与反向
+      if (item.source * 1 > item.target * 1) { // 倒向流转
+        item.sourceAnchor = 1
+        item.targetAnchor = 1
+      } else { // 正向流转
+        item.sourceAnchor = 2
+        item.targetAnchor = 0
+      }
+    })
+    // 计算重复出现的次数 计算偏移量
+    //   if (!sourceShowUpTimes[item.source] && sourceShowUpTimes[item.source] !== 1) {
+    //     sourceShowUpTimes[item.source] = 1
+    //   } else {
+    //     sourceShowUpTimes[item.source]++
+    //   }
+    //   if (!targetShowUpTimes[item.target] && targetShowUpTimes[item.target] !== 1) {
+    //     targetShowUpTimes[item.target] = 1
+    //   } else {
+    //     targetShowUpTimes[item.target]++
+    //   }
+    // console.log(sourceShowUpTimes)
+    // console.log(targetShowUpTimes)
+
+    graph.data(data)
+    graph.render()
+    function clearAllStats() {
+      graph.setAutoPaint(false)
+      graph.getNodes().forEach(function(node) {
+        graph.clearItemStates(node, ['dark', 'highlight', 'previous', 'next'])
+      })
+      graph.getEdges().forEach(function(edge) {
+        graph.clearItemStates(edge, 'highlight')
+      })
+      graph.paint()
+      graph.setAutoPaint(true)
+    }
+    graph.on('node:mouseenter', function(e) {
+      const item = e.item
+      graph.setAutoPaint(false)
+      graph.getNodes().forEach(function(node) {
+        graph.clearItemStates(node)
+        graph.setItemState(node, 'dark', true)
+      })
+      graph.setItemState(item, 'dark', false)
+      graph.setItemState(item, 'highlight', true)
+      graph.getEdges().forEach(function(edge) {
+        if (edge.getSource() === item) {
+          graph.setItemState(edge.getTarget(), 'next', true)
+          graph.setItemState(edge, 'highlight', true)
+          edge.toFront()
+        } else if (edge.getTarget() === item) {
+          graph.setItemState(edge.getSource(), 'previous', true)
+          graph.setItemState(edge, 'highlight', true)
+          edge.toFront()
+        } else {
+          graph.setItemState(edge, 'highlight', false)
+        }
+      })
+      graph.paint()
+      graph.setAutoPaint(true)
+    })
+    graph.on('node:mouseleave', clearAllStats)
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.dashboard {
+  &-container {
+    margin: 30px;
+  }
+  &-text {
+    font-size: 30px;
+    line-height: 46px;
+  }
+}
+</style>

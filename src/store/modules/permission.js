@@ -1,7 +1,15 @@
+/*
+ * @Author: your name
+ * @Date: 2020-03-13 11:15:31
+ * @LastEditTime: 2020-05-06 16:14:31
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \vue-codechos-template\src\store\modules\permission.js
+ */
 import { asyncRoutes, constantRoutes } from '@/router'
 
 /**
- * Use meta.role to determine if the current user has permission
+ * 通过 meta.role 判断当前用户是否有对应route的权限
  * @param roles
  * @param route
  */
@@ -14,7 +22,7 @@ function hasPermission(roles, route) {
 }
 
 /**
- * Filter asynchronous routing tables by recursion
+ * 递归 异步过滤路由
  * @param routes asyncRoutes
  * @param roles
  */

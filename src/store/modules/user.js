@@ -1,6 +1,8 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, logout, getInfo, realLogin, realGetInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
+import qs from 'qs'
+// import user from 'mock/user'
 
 const getDefaultState = () => {
   return {
@@ -46,7 +48,20 @@ const actions = {
       })
     })
   },
-
+  // real Login
+  realLogin({ commit }, userInfo) {
+    const { username, password, dose } = userInfo
+    return new Promise((resolve, reject) => {
+      realLogin(qs.stringify({ username: username.trim(), password: password, do: dose })).then(response => {
+        const { data } = response
+        commit('SET_TOKEN', data.token)
+        setToken(data.token)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
@@ -69,6 +84,33 @@ const actions = {
         commit('SET_AVATAR', avatar)
         resolve(data)
       }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  // real  get user info
+  realGetInfo({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      realGetInfo({ token: state.token, do: 'user', id: 1 }).then(response => {
+        const { data } = response
+
+        if (!data) {
+          reject('Verification failed, please Login again.')
+        }
+
+        const { roles, name, avatar } = data
+
+        // roles must be a non-empty array
+        if (!roles || roles.length <= 0) {
+          reject('getInfo: roles must be a non-null array!')
+        }
+
+        commit('SET_ROLES', roles)
+        commit('SET_NAME', name)
+        commit('SET_AVATAR', avatar)
+        resolve(data)
+      }).catch(error => {
+        debugger
         reject(error)
       })
     })
