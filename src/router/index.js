@@ -97,6 +97,17 @@ export const constantRoutes = [
           title: 'Form',
           icon: 'form'
         }
+      },
+      {
+        hidden: true,
+        path: 'index/detail',
+        name: 'FormDetail',
+        component: () => import('@/views/form/FormDetail'),
+        meta: {
+          title: 'Form',
+          icon: 'form',
+          activeMenu: '/form/index'
+        }
       }
     ]
   }
@@ -110,7 +121,7 @@ export const asyncRoutes = [
   {
     path: '/nested',
     component: Layout,
-    redirect: '/nested/menu1',
+    redirect: '/nested/menu1/menu1-1',
     name: 'Nested',
     meta: {
       title: 'Nested',
@@ -122,6 +133,7 @@ export const asyncRoutes = [
         component: () => import('@/views/nested/menu1/index'), // Parent router-view
         name: 'Menu1',
         meta: { title: 'Menu1' },
+        redirect: 'noRedirect',
         children: [
           {
             path: 'menu1-1',
@@ -171,7 +183,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'https://www.baidu.com',
-        meta: { title: 'External Link', icon: 'link' }
+        meta: { title: 'External Link', icon: 'link', roles: ['admin'] }
       }
     ]
   },
@@ -182,7 +194,7 @@ export const asyncRoutes = [
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
+  scrollBehavior: () => ({ y: 0 }), // reset scroll position
   routes: constantRoutes
 })
 

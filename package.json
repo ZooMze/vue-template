@@ -5,7 +5,7 @@
   "author": "Pan <panfree23@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "vue-cli-service serve --open",
+    "dev": "vue-cli-service serve",
     "build:prod": "vue-cli-service build",
     "build:stage": "vue-cli-service build --mode staging",
     "preview": "node build/index.js --preview",
@@ -20,9 +20,11 @@
     "@antv/x6-components": "^0.2.0",
     "axios": "0.18.1",
     "babel-polyfill": "^6.26.0",
+    "big.js": "^5.2.2",
     "element-ui": "2.13.0",
     "gojs": "^2.1.11",
     "js-cookie": "2.2.0",
+    "lodash": "^4.17.15",
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "path-to-regexp": "2.4.0",
@@ -66,7 +68,7 @@
   },
   "browserslist": [
     "> 1%",
-    "ie 11",
+    "ie 9",
     "last 2 versions"
   ]
 }

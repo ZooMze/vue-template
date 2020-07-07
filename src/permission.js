@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-03-13 11:15:31
+ * @LastEditTime: 2020-05-06 17:15:58
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \vue-codechos-template\src\permission.js
+ */
 import router from './router'
 import store from './store'
 import { Message } from 'element-ui'
@@ -38,7 +46,7 @@ router.beforeEach(async(to, from, next) => {
 
           // generate accessible routes map based on roles
           const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
-
+          console.log(accessRoutes)
           // dynamically add accessible routes
           router.addRoutes(accessRoutes)
 

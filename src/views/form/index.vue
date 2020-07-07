@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <el-button type="" @click="goToPage('FormDetail')">点击</el-button>
     <el-form ref="form" :model="form" label-width="120px">
       <el-form-item label="Activity name">
         <el-input v-model="form.name" />
@@ -65,6 +66,9 @@ export default {
     }
   },
   methods: {
+    goToPage(name) {
+      this.$router.push({ name: name })
+    },
     onSubmit() {
       this.$message('submit!')
     },

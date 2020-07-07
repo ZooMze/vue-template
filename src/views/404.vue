@@ -8,13 +8,15 @@
         <img class="pic-404__child right" src="@/assets/404_images/404_cloud.png" alt="404">
       </div>
       <div class="bullshit">
-        <div class="bullshit__oops">OOPS!</div>
-        <div class="bullshit__info">All rights reserved
-          <a style="color:#20a0ff" href="https://wallstreetcn.com" target="_blank">wallstreetcn</a>
-        </div>
+        <div class="bullshit__oops">抱歉!</div>
         <div class="bullshit__headline">{{ message }}</div>
-        <div class="bullshit__info">Please check that the URL you entered is correct, or click the button below to return to the homepage.</div>
-        <a href="" class="bullshit__return-home">Back to home</a>
+        <!-- <div class="bullshit__info">
+          常在江湖飘, 哪能不挨404~
+           <a style="color:#20a0ff" :href="homePage" target="_blank"></a>
+        </div> -->
+        <div class="bullshit__info">请检查当前URL是否正确, 确认好后请重试!</div>
+        <div class="bullshit__info">实在不知道怎么办请点击下方回到主页吧</div>
+        <a :href="homePage" class="bullshit__return-home">回到主页</a>
       </div>
     </div>
   </div>
@@ -26,7 +28,10 @@ export default {
   name: 'Page404',
   computed: {
     message() {
-      return 'The webmaster said that you can not enter this page...'
+      return '我们找遍了整个地球也没找到您想前往的页面'
+    },
+    homePage() {
+      return window.location.origin
     }
   }
 }

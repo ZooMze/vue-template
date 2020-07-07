@@ -9,13 +9,13 @@ import user from './modules/user'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-  modules: {
-    app,
-    permission,
-    settings,
-    user
+  modules: { // 引用 modules
+    app, // 应用信息
+    permission, // 权限
+    settings, // 配置项
+    user // 用户信息
   },
-  getters
+  getters // 注册getters
 })
 
 export default store

@@ -1,7 +1,9 @@
 <template>
-  <div>
+  <div class="app-container">
+    这里是工作台界面, 所有角色都可以查看
     <el-button type="button" @click="saveImg">保存为图片</el-button>
-    <el-button type="button" @click="print">打印</el-button>
+    <el-button type="button" @click="goToPage('Form')">去一个form页面</el-button>
+    <el-button type="button" @click="goToPage('FormDetail')">去一个form的详情页</el-button>
     <div class="dashboard-container" style="width: calc(100% - 60px); display: flex; justify-content: space-between">
       <!-- <div class="dashboard-text">name: {{ name }}</div>
       <div>ZooMze</div>
@@ -14,6 +16,9 @@
 </template>
 
 <script>
+
+// const Big = require('big.js')
+import Big from 'big.js/big.mjs' // 使用big.js解决浮点数的计算错误
 import { mapGetters } from 'vuex'
 import go from 'gojs'
 
@@ -32,6 +37,16 @@ export default {
     ])
   },
   mounted() {
+    // const x = new Big('0.3')
+    // // const y = this.Big('123456.7e-3')
+    // // const z = new this.Big(x)
+    // // x.eq(y) && x.eq(z) && y.eq(z)
+    // console.log(Number(x.times('2').add(0.1).plus('155.1156452').toPrecision(8)))
+    // console.log(Number(x))
+    // console.log(x.toString())
+    const x = new Big(-8.123456789)
+    console.log(x.e)
+    // console.log(x.round(9).toString())
     var $ = go.GraphObject.make
     const self = this
     this.myDiagram = $(go.Diagram, 'myDiagramDiv', {
@@ -231,7 +246,7 @@ export default {
       $(go.Shape, // the arrowhead
         { toArrow: 'triangle', strokeWidth: 0, fill: '#5f5f5f' },
         new go.Binding('fill', '', function(link) { return link.data.active ? 'red' : '#5f5f5f' }).ofObject(),
-        new go.Binding('fill', 'isSelected', function(sel, link) { console.log(sel); return sel ? 'dodgerblue' : (link.data.active ? 'red' : link.stroke) }).ofObject(),
+        new go.Binding('fill', 'isSelected', function(sel, link) { return sel ? 'dodgerblue' : (link.data.active ? 'red' : link.stroke) }).ofObject(),
       ),
       $(go.Panel, 'Auto', // the link label, normally not visible
         {
@@ -263,6 +278,9 @@ export default {
     })
   },
   methods: {
+    goToPage(name) {
+      this.$router.push({ name: name })
+    },
     /**
      * @description: 根据精度误差过滤 (一维数组 / 对象数组)中的近似值
      * @param {String} ary 源数据
@@ -273,9 +291,9 @@ export default {
      */
     resetAryByPrecision(ary, pre, type = 'default', keyList) {
       const array = ['10.1', '11.2', '21.3', '10.0', '1.6', '1.1', '1.3']
-      const objectArray = [{ lan: '10.1', lat: '10.2' }, { lan: '10.3', lat: '10.6' }, { lan: '11.1', lat: '10.2' }, { lan: '13.1', lat: '13.2' }]
-      console.log(array)
-      console.log(objectArray)
+      // const objectArray = [{ lan: '10.1', lat: '10.2' }, { lan: '10.3', lat: '10.6' }, { lan: '11.1', lat: '10.2' }, { lan: '13.1', lat: '13.2' }]
+      // console.log(array)
+      // console.log(objectArray)
       let result = []
       try {
         if (type === 'default') {

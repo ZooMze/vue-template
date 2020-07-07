@@ -1,0 +1,10 @@
+/* 改变主题色变量, 其相关颜色(禁用, 半透明等)将自动填充 */
+$--color-primary: #409EFF;
+
+/* 改变 icon 字体路径变量，本条配置不能删除 */
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+// 修改默认字体大小
+
+// 其余更多变量在 ~element-ui/packages/theme-chalk/src/common/var.scss 查看
+@import "~element-ui/packages/theme-chalk/src/index";

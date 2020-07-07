@@ -13,20 +13,18 @@ import { getToken } from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  baseURL: process.env.VUE_APP_BASE_API, // 完整的url = origin + ( base url + request url ) 前面的origin自动添加
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // request timeout
+  timeout: 5000 // 请求超时时长
 })
 
 // request interceptor
 service.interceptors.request.use(
   config => {
-    // do something before request is sent
-
+    // 在请求发送前执行
     if (store.getters.token) {
-      // let each request carry token
-      // ['X-Token'] is a custom headers key
-      // please modify it according to the actual situation
+      // 让每个接口携带token
+      // ['X-Token'] 是自定义的header键名, 根据实际需求重新定义即可
       config.headers['X-Token'] = getToken()
     }
     return config
@@ -41,19 +39,19 @@ service.interceptors.request.use(
 // response interceptor
 service.interceptors.response.use(
   /**
-   * If you want to get http information such as headers or status
-   * Please return  response => response
+   * 如果你想在代码中使用HTTP请求的更多内容例如 headers 和 status
+   * 修改返回值即可:  return  response => response
   */
 
   /**
-   * Determine the request status by custom code
-   * Here is just an example
-   * You can also judge the status by HTTP Status Code
+   * 通过自定义代码判定请求状态
+   * 以下是例子
+   * 你同样可以直接使用 HTTP Status Code作为判断依据
    */
   response => {
     const res = response.data
 
-    // if the custom code is not 20000, it is judged as an error.
+    // 状态码只要不为20000, 全部判定为 请求接口未成功.
     if (res.code !== 20000) {
       Message({
         message: res.message || 'Error',
@@ -61,7 +59,7 @@ service.interceptors.response.use(
         duration: 5 * 1000
       })
 
-      // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
+      // 50008: token错误; 50012: 账户已在别处登录; 50014: token过期;
       if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
         // to re-login
         MessageBox.confirm('你的登录信息已过期, 请重新登录', 'Confirm logout', {
