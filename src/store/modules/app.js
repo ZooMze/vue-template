@@ -5,9 +5,15 @@ const state = {
     opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
     withoutAnimation: false
   },
-  device: 'desktop'
+  device: 'desktop',
+  zoomze: 'zoomze'
 }
 
+const getters = {
+  getZoomze: (state) => (id) => {
+    return state.zoomze + id
+  }
+}
 const mutations = {
   TOGGLE_SIDEBAR: state => {
     state.sidebar.opened = !state.sidebar.opened
@@ -24,13 +30,14 @@ const mutations = {
     state.sidebar.withoutAnimation = withoutAnimation
   },
   TOGGLE_DEVICE: (state, device) => {
+    console.log(device)
     state.device = device
   }
 }
 
 const actions = {
-  toggleSideBar({ commit }) {
-    commit('TOGGLE_SIDEBAR')
+  toggleSideBar(state) {
+    state.commit('TOGGLE_SIDEBAR')
   },
   closeSideBar({ commit }, { withoutAnimation }) {
     commit('CLOSE_SIDEBAR', withoutAnimation)
@@ -43,6 +50,7 @@ const actions = {
 export default {
   namespaced: true,
   state,
+  getters,
   mutations,
   actions
 }

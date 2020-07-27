@@ -71,6 +71,11 @@ module.exports = {
     config.plugins.delete('preload') // TODO: need test
     config.plugins.delete('prefetch') // TODO: need test
 
+    // webpack-bundle-analyzer
+    config
+      .plugin('webpack-bundle-analyzer')
+      .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
+
     // set svg-sprite-loader
     config.module
       .rule('svg')
