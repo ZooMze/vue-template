@@ -18,7 +18,7 @@
     "@antv/g6": "^3.4.0",
     "@antv/x6": "^0.3.1",
     "@antv/x6-components": "^0.2.0",
-    "axios": "0.18.1",
+    "axios": "1.6.0",
     "babel-polyfill": "^6.26.0",
     "big.js": "^5.2.2",
     "element-ui": "2.13.0",
